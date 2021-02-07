@@ -1,0 +1,26 @@
+{
+  "name": "akamai-toolkit",
+  "version": "1.0.1",
+  "description": "This tool aims to be the perfect tool to work on Akamai by gathering different tools created by the SneakerDev community to ease Akamai cookies generation",
+  "main": "toolkit.js",
+  "scripts": {
+    "start": "node toolkit.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OXDBXKXO",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "^7.12.14",
+    "@babel/traverse": "^7.12.13",
+    "@babel/types": "^7.12.13",
+    "abck": "^1.6.6",
+    "commander": "^7.0.0",
+    "got": "^11.8.1",
+    "hooman": "^1.2.6",
+    "js-beautify": "^1.13.5",
+    "puppeteer": "^7.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0"
+  }
+}
