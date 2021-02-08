@@ -44,6 +44,8 @@ const kact  = { 1:"keyDown", 2:"keyUp", 3:"keyPress" };
 const vcact = { 1:"visibilityChange",2:"onBlur",3:"onFocus" };
 
 function parse_sensor(sensor_data) {
+    const missing_values = sensorIntegrityCheck(sensor_data);
+    if (missing_values.length) return missing_values;
 
     let parsed_sensor = {};
     let actions = {};
@@ -196,19 +198,39 @@ function parse_sensor(sensor_data) {
     }
     parsed_sensor["timings"] = sensor_data.substring(previous_key_index + 1, sensor_data.length);
 
-    if (actions.length) console.log(chalk.magenta.bold("\nTimings:"))
+    if (Object.keys(actions).length) console.log(chalk.magenta.bold("\nTimings:"))
     let time = 0;
     Object.keys(actions).sort((a, b) => a - b).forEach((a)=>{
         const ts = a - time;
-        console.log(`[${ts} ms] - ${actions[a]}`);
+        if (!isNaN(ts)) console.log(`[${ts} ms] - ${actions[a]}`);
     })
-
+    
     console.log(chalk.magenta.bold("\nParsed sensor_data:"));
     prettyPrint(parsed_sensor, values_115, values_fpVal);
+    
+    // Challenge solutions check
+    if (parsed_sensor["challenge_1"].length || parsed_sensor["challenge_2"].length || parsed_sensor["challenge_3"].length) {
+        console.log(chalk.magenta.bold("\nChallenge checks:"));
 
+        if (parsed_sensor["challenge_1"].length) {
+            console.log(chalk.blueBright.underline("Challenge 1"));
+            challengeCheckSolutions(parsed_sensor["challenge_1"]);
+        }
+
+        if (parsed_sensor["challenge_2"].length) {
+            console.log(chalk.blueBright.underline("Challenge 2"));
+            challengeCheckSolutions(parsed_sensor["challenge_2"]);
+        }
+
+        if (parsed_sensor["challenge_3"].length) {
+            console.log(chalk.blueBright.underline("Challenge 3"));
+            challengeCheckSolutions(parsed_sensor["challenge_3"]);
+        }
+    }
+    
+    // Miscellaneous checks
     console.log(chalk.magenta.bold("\nMiscellaneous checks:"));
-
-    // vels checks
+    
     console.log(chalk.whiteBright.bold("ke_vel check:            ") + ((parsed_sensor["ke_vel + 1"] - ke_vel - 1) ? chalk.red.bold("FAILED ") + chalk.magentaBright(ke_vel) + chalk.red.bold(" != ") + chalk.magentaBright(parsed_sensor["ke_vel + 1"]) : chalk.green.bold("PASSED")));
     console.log(chalk.whiteBright.bold("me_vel check:            ") + ((parsed_sensor["me_vel + 32"] - me_vel - 32) ? chalk.red.bold("FAILED ") + chalk.magentaBright(me_vel) + chalk.red.bold(" != ") + chalk.magentaBright(parsed_sensor["me_vel + 32"]) : chalk.green.bold("PASSED")));
     console.log(chalk.whiteBright.bold("te_vel check:            ") + ((parsed_sensor["te_vel + 32"] - te_vel - 32) ? chalk.red.bold("FAILED ") + chalk.magentaBright(te_vel) + chalk.red.bold(" != ") + chalk.magentaBright(parsed_sensor["te_vel + 32"]) : chalk.green.bold("PASSED")));
@@ -242,25 +264,6 @@ function parse_sensor(sensor_data) {
     console.log(chalk.whiteBright.bold("sensor hash (118) check: ") + ((parsed_sensor["sensor_hash"] != sensor_hash) ? chalk.red.bold("FAILED ") + chalk.magentaBright(sensor_hash) + chalk.red.bold(" != ") + chalk.magentaBright(parsed_sensor["sensor_hash"]) : chalk.green.bold("PASSED")));
 
 
-    if (parsed_sensor["challenge_1"].length || parsed_sensor["challenge_2"].length || parsed_sensor["challenge_3"].length) {
-        console.log(chalk.magenta.bold("\nChallenge checks:"));
-
-        if (parsed_sensor["challenge_1"].length) {
-            console.log(chalk.blueBright.underline("Challenge 1"));
-            challengeCheckSolutions(parsed_sensor["challenge_1"]);
-        }
-
-        if (parsed_sensor["challenge_2"].length) {
-            console.log(chalk.blueBright.underline("Challenge 2"));
-            challengeCheckSolutions(parsed_sensor["challenge_2"]);
-        }
-
-        if (parsed_sensor["challenge_3"].length) {
-            console.log(chalk.blueBright.underline("Challenge 3"));
-            challengeCheckSolutions(parsed_sensor["challenge_3"]);
-        }
-    }
-
     process.exit(0);
 }
 
@@ -274,7 +277,7 @@ function prettyPrint(parsed_sensor) {
         "lang":"bmak.lang",
         "prod":"bmak.prod",
         "plen":"bmak.plen",
-        "loc": "bmak.loc",
+        "loc": "bmak.loc (always empty)",
         "nav_perm":"bmak.nav_perm",
         "brv": "bmak.brv",
     };
@@ -528,6 +531,37 @@ function challengeCheckSolutions(challenge) {
 
         console.log((Abck.bdm(i, m) == 0 ? chalk.greenBright.bold(solution) : chalk.redBright.bold(solution)));
     });
+}
+
+function sensorIntegrityCheck(sensor_data) {
+    let missing_values = [];
+    if (!sensor_data.includes("-1,2,-94,-100,")) missing_values.push(100);
+    if (!sensor_data.includes("-1,2,-94,-101,")) missing_values.push(101);
+    if (!sensor_data.includes("-1,2,-94,-105,")) missing_values.push(105);
+    if (!sensor_data.includes("-1,2,-94,-102,")) missing_values.push(102);
+    if (!sensor_data.includes("-1,2,-94,-108,")) missing_values.push(108);
+    if (!sensor_data.includes("-1,2,-94,-110,")) missing_values.push(110);
+    if (!sensor_data.includes("-1,2,-94,-117,")) missing_values.push(117);
+    if (!sensor_data.includes("-1,2,-94,-111,")) missing_values.push(111);
+    if (!sensor_data.includes("-1,2,-94,-109,")) missing_values.push(109);
+    if (!sensor_data.includes("-1,2,-94,-114,")) missing_values.push(114);
+    if (!sensor_data.includes("-1,2,-94,-103,")) missing_values.push(103);
+    if (!sensor_data.includes("-1,2,-94,-112,")) missing_values.push(112);
+    if (!sensor_data.includes("-1,2,-94,-115,")) missing_values.push(115);
+    if (!sensor_data.includes("-1,2,-94,-106,")) missing_values.push(106);
+    if (!sensor_data.includes("-1,2,-94,-119,")) missing_values.push(119);
+    if (!sensor_data.includes("-1,2,-94,-122,")) missing_values.push(122);
+    if (!sensor_data.includes("-1,2,-94,-123,")) missing_values.push(123);
+    if (!sensor_data.includes("-1,2,-94,-124,")) missing_values.push(124);
+    if (!sensor_data.includes("-1,2,-94,-126,")) missing_values.push(126);
+    if (!sensor_data.includes("-1,2,-94,-127,")) missing_values.push(127);
+    if (!sensor_data.includes("-1,2,-94,-70,")) missing_values.push(70);
+    if (!sensor_data.includes("-1,2,-94,-80,")) missing_values.push(80);
+    if (!sensor_data.includes("-1,2,-94,-116,")) missing_values.push(116);
+    if (!sensor_data.includes("-1,2,-94,-118,")) missing_values.push(118);
+    if (!sensor_data.includes("-1,2,-94,-129,")) missing_values.push(129);
+    if (!sensor_data.includes("-1,2,-94,-121,")) missing_values.push(121);
+    return missing_values;
 }
 
 module.exports = { parse_sensor }
