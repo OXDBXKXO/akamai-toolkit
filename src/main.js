@@ -54,17 +54,35 @@ async function checkVersions() {
 }
 
 async function ternary2if() {
-
     rl.question('What ternary do you want to convert ? ', (ternary) => {
+        if (ternary == "") { rl.close(); return; }
 
         let js_raw = toIf(ternary);
 
-        console.log("\n" + chalk.cyan.bold(beautify(js_raw, { indent_size: 2, space_in_empty_paren: true })));
-
-        console.log();
+        console.log(chalk.whiteBright.bold("\n-------------------------"));
+        console.log(chalk.whiteBright.bold(beautify(js_raw, { indent_size: 2, space_in_empty_paren: true })));
+        console.log(chalk.whiteBright.bold("-------------------------\n"));
 
         rl.close();
     });
 }
 
-module.exports = { saveDeofbfuscatedFile, checkVersions, ternary2if }
+async function sensorParsing() {
+    rl.question('Paste sensor_data here: ', (sensor) => {
+        if (sensor == "") { rl.close(); return; }
+
+        try {
+            const missing_values = parse_sensor(sensor)
+            
+            if (missing_values.length) console.log(chalk.red.bold("\nMalformed sensor_data"));
+            missing_values.forEach(missing_value => {
+                console.log(chalk.red.underline("Missing value: " + missing_value));
+            });
+        }
+        catch { console.log(chalk.red.underline("Malformed sensor_data")); }
+
+        rl.close();
+    });
+}
+
+module.exports = { saveDeofbfuscatedFile, checkVersions, ternary2if, sensorParsing }
