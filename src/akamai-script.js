@@ -1,6 +1,9 @@
 const got = require('got');
 const chalk = require('chalk');
 
+let config = require('../config.json');
+const { parse } = require('commander');
+
 async function request(target) {
     const { body } = await got(target, {
         https: {
@@ -49,9 +52,15 @@ async function getAkamaiVersion(url, log=undefined) {
 
     const ver = getVersionFromFile(result.script);
 
-    if (log) console.log(result.endpoint, chalk.green.bold(ver));
+    if (log) console.log(result.endpoint, printColoredVersion(ver));
 
     return ver;
 }
 
-module.exports = { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion };
+function printColoredVersion(ver) {
+    if (parseFloat(ver) > parseFloat(config.akamai_version)) return chalk.yellowBright.bold(ver + " (new)");
+    else if (parseFloat(ver) < parseFloat(config.akamai_version)) return chalk.magentaBright.bold(ver + " (old)");
+    else return chalk.greenBright.bold(ver + " (current)");
+}
+
+module.exports = { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion, printColoredVersion };

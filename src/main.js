@@ -10,11 +10,14 @@ const rl = readline.createInterface({
 });
 
 // Local files imports
-const { deobfuscate } = require('./deobfuscate.js');
-const { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion } = require('./akamai-script.js');
+const { deobfuscate } = require('./deobfuscate');
+const { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion, printColoredVersion } = require('./akamai-script');
 const { toIf } = require('./ternary2if');
+const { parse_sensor } = require('./parse-sensor');
 
 const config = require('../config.json');
+const { parse } = require('commander');
+const { resolve } = require('path');
 
 async function saveDeofbfuscatedFile(target) {
 
@@ -33,31 +36,40 @@ async function saveDeofbfuscatedFile(target) {
     const ver = getVersionFromFile(script_obf);
     const script = deobfuscate(script_obf);
 
-    console.log("Script version is : " + ver)
+    console.log("Script version is : " + printColoredVersion(ver));
 
     const filename = "akamai-" + ver + "-" + target.split('.')[1] + ".js";
 
-    if(!fs.existsSync(__dirname + '/../output')) {
-        fs.mkdirSync(__dirname + '/../output');
+    try {
+        if(!fs.existsSync(__dirname + '/../output')) {
+            fs.mkdirSync(__dirname + '/../output');
+        }
+    } catch {
+        console.log(chalk.red.underline("Could not create ../output/ directory"));
+        return;
     }
 
     fs.writeFile(__dirname + '/../output/' + filename, script, function (err) {
-        if (err) throw err;
-        console.log(filename + " successfully created in `output` folder");
+        if (err) { console.log(chalk.red.underline("Could not create ../output/" + filename + " file")); process.exit(0); }
+
+        console.log(chalk.whiteBright.underline(filename) + " successfully created in `output` folder");
+        process.exit(0);
     });
 }
 
 async function checkVersions() {
-    config.sites.forEach(async (site) => {
-        await getAkamaiVersion(site, log=true);
-    });
+    await Promise.all(config.sites.map(async (site) => {
+        await getAkamaiVersion(site, log = true);
+    }))
 }
 
 async function ternary2if() {
     rl.question('What ternary do you want to convert ? ', (ternary) => {
         if (ternary == "") { rl.close(); return; }
 
-        let js_raw = toIf(ternary);
+        let js_raw = "";
+        try { js_raw = toIf(ternary); }
+        catch { console.log(chalk.red.underline("Malformed ternary expression")); }
 
         console.log(chalk.whiteBright.bold("\n-------------------------"));
         console.log(chalk.whiteBright.bold(beautify(js_raw, { indent_size: 2, space_in_empty_paren: true })));
