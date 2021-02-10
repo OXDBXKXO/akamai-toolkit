@@ -2,7 +2,6 @@ const got = require('got');
 const chalk = require('chalk');
 
 let config = require('../config.json');
-const { parse } = require('commander');
 
 async function request(target) {
     const { body } = await got(target, {

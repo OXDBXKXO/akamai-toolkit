@@ -21,7 +21,7 @@ async function args_parse() {
     .option('-t, --ternary', "Turns a ternary expression to a regular if-statement")
     .option('-c, --custom-script <config_file>', "Prompts a Puppeteer-controlled Chromium instance for script behavior analysis")
     .option('-p, --parse [sensor]', "Parses provided sensor_data")
-    .option('-m, --mact-replay <mact>', "Replays provided mact in browser viewer")
+    .option('-m, --mact-replay [mact]', "Replays provided mact in browser viewer")
     .option('-h, --help', "Displays list of available parameters")
 
     program.parse();
@@ -38,6 +38,8 @@ async function args_parse() {
     if (options.ternary) await ternary2if();
 
     if (options.parse) sensorParsing();
+
+    
 
     if (options.help) program.help();
 }
