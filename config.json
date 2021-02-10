@@ -1,13 +1,27 @@
 {
     "akamai_version": "1.66",
-    "chromePath": "/home/oxdbxkxo/chrome",
+    "chromePath": "../node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux/chrome",
     "sites": [
-        "https://www.fedex.com",
+        "https://www.xfinity.com",
+        "https://www.ups.com",
         "https://www.banggood.com",
         "https://www.homedepot.com",
         "https://www.groupon.com",
-        "https://www.nike.com",
-        "https://www.adidas.fr",
+        "https://www.att.com",
+        "https://www.lenovo.com",
+        "https://www.zara.com",
+        "https://www.olx.in",
+        "https://www.lowes.com",
+        "https://www.usbank.com",
+        "https://www.farfetch.com",
+        "https://www.dhl.de",
+        "https://www.g2a.com",
+        "https://www.fedex.com",
+        "https://www.rottentomatoes.com",
+        "https://www.uniqlo.com",
+        "https://www.collegeboard.org",
+        "https://www.xero.com",
+        "https://www.emirates.com",
         "https://www.thetrainline.com"
     ]
 }
