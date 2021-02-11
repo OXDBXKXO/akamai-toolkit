@@ -1,8 +1,6 @@
 const chalk = require('chalk');
 const { default: Abck } = require("abck");
 
-const config = require('../config.json');
-
 const keys = {
     '-1,2,-94,-100,': 'key_ver',
     '-1,2,-94,-101,': 'Browser_Info',
@@ -268,7 +266,6 @@ function parse_sensor(sensor_data) {
 }
 
 function prettyPrint(parsed_sensor) {
-    // Browser information
     console.log(chalk.blueBright.underline("Browser information"));
     const browser_info = { 
         "user_agent":"bmak.uar()",
@@ -287,9 +284,7 @@ function prettyPrint(parsed_sensor) {
 
         console.log(chalk.whiteBright(browser_info[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Automation detection
     console.log(chalk.blueBright.underline("\nAutomation detection"));
     const auto_detect = {
         "sed":"bmak.sed()",
@@ -304,9 +299,7 @@ function prettyPrint(parsed_sensor) {
 
         console.log(chalk.whiteBright(auto_detect[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // bmak.bd() (Browser detection via feature detection)
     console.log(chalk.blueBright.underline("\nBrowser detection (bmak.bd())"));
     const bd_values = { 
         "cpen":"window.callPhantom",
@@ -328,9 +321,7 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(bd_values[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Screen size
     console.log(chalk.blueBright.underline("\nScreen size"));
     const screen_size = {
         "width": "window.screen.width",
@@ -345,9 +336,7 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(screen_size[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Events
     console.log(chalk.blueBright.underline("\nEvents"));
     const events = {
         "events": "Special events status",
@@ -363,17 +352,13 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(events[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Coherence check
     console.log(chalk.blueBright.underline("\nVariable 115 (Coherence check)"));
     values_115.forEach(value => {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(value + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Challenges
     console.log(chalk.blueBright.underline("\nChallenges"));
     const challenges = {
         "challenge_1": "S = bmak.mn_r[bmak.mn_get_current_challenges()[1]]",
@@ -384,9 +369,7 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(challenges[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Fingerprinting
     console.log(chalk.blueBright.underline("\nFingerprinting"));
     const fingerprinting = {
         "mr": "bmak.mr",
@@ -397,17 +380,13 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(fingerprinting[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // bmak.fpcf.fpValstr (70)
     console.log(chalk.blueBright.underline("\nbmak.fpcf.fpValstr (70)"));
     values_fpVal.forEach(value => {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(value + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // w (129)
     console.log(chalk.blueBright.underline("\nw (129)"));
     const more_fingerprinting = {
         "fmh": "bmak.fmh (installed fonts hash)",
@@ -422,9 +401,7 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(more_fingerprinting[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Target info
     console.log(chalk.blueBright.underline("\nTarget info"));
     const website = {
         "URL": "bmak.getdurl()",
@@ -435,9 +412,7 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(website[value] + ": " + chalk.cyanBright.bold(val)));
     });
-    // -------
 
-    // Sensor_data info
     console.log(chalk.blueBright.underline("\nSensor_data info"));
     const api_key = parsed_sensor["key_ver"].substring(0, parsed_sensor["key_ver"].length - 4);
     const version = parsed_sensor["key_ver"].substring(parsed_sensor["key_ver"].length - 4)
@@ -457,9 +432,7 @@ function prettyPrint(parsed_sensor) {
     console.log(chalk.whiteBright("Sensor_data generation time (ms): " + chalk.cyanBright.bold(sensor_data_gen_time)));
     console.log(chalk.whiteBright("bmak.startTracking() execution time (ms): " + chalk.cyanBright.bold(startTracking_exec_time)));
     console.log(chalk.whiteBright("Public API key hash generation time (ms): " + chalk.cyanBright.bold(api_hash_gen_time)));
-    // -------
 
-    // Miscellaneous variables
     console.log(chalk.blueBright.underline("\nMiscellaneous variables"));
     const misc = {
         "z1": "bmak.z1 = bmak.pi(bmak.start_ts / (2016 * 2016))",
@@ -534,33 +507,12 @@ function challengeCheckSolutions(challenge) {
 }
 
 function sensorIntegrityCheck(sensor_data) {
+    const values = [ 100, 101, 105, 102, 108, 110, 117, 111, 109, 114, 103, 112, 115, 106,
+                     119, 122, 123, 124, 126, 127, 70, 80, 116, 118, 129, 121];
     let missing_values = [];
-    if (!sensor_data.includes("-1,2,-94,-100,")) missing_values.push(100);
-    if (!sensor_data.includes("-1,2,-94,-101,")) missing_values.push(101);
-    if (!sensor_data.includes("-1,2,-94,-105,")) missing_values.push(105);
-    if (!sensor_data.includes("-1,2,-94,-102,")) missing_values.push(102);
-    if (!sensor_data.includes("-1,2,-94,-108,")) missing_values.push(108);
-    if (!sensor_data.includes("-1,2,-94,-110,")) missing_values.push(110);
-    if (!sensor_data.includes("-1,2,-94,-117,")) missing_values.push(117);
-    if (!sensor_data.includes("-1,2,-94,-111,")) missing_values.push(111);
-    if (!sensor_data.includes("-1,2,-94,-109,")) missing_values.push(109);
-    if (!sensor_data.includes("-1,2,-94,-114,")) missing_values.push(114);
-    if (!sensor_data.includes("-1,2,-94,-103,")) missing_values.push(103);
-    if (!sensor_data.includes("-1,2,-94,-112,")) missing_values.push(112);
-    if (!sensor_data.includes("-1,2,-94,-115,")) missing_values.push(115);
-    if (!sensor_data.includes("-1,2,-94,-106,")) missing_values.push(106);
-    if (!sensor_data.includes("-1,2,-94,-119,")) missing_values.push(119);
-    if (!sensor_data.includes("-1,2,-94,-122,")) missing_values.push(122);
-    if (!sensor_data.includes("-1,2,-94,-123,")) missing_values.push(123);
-    if (!sensor_data.includes("-1,2,-94,-124,")) missing_values.push(124);
-    if (!sensor_data.includes("-1,2,-94,-126,")) missing_values.push(126);
-    if (!sensor_data.includes("-1,2,-94,-127,")) missing_values.push(127);
-    if (!sensor_data.includes("-1,2,-94,-70,")) missing_values.push(70);
-    if (!sensor_data.includes("-1,2,-94,-80,")) missing_values.push(80);
-    if (!sensor_data.includes("-1,2,-94,-116,")) missing_values.push(116);
-    if (!sensor_data.includes("-1,2,-94,-118,")) missing_values.push(118);
-    if (!sensor_data.includes("-1,2,-94,-129,")) missing_values.push(129);
-    if (!sensor_data.includes("-1,2,-94,-121,")) missing_values.push(121);
+
+    for (value of values) if (!sensor_data.includes("-1,2,-94,-" + value + ",")) missing_values.push(value);
+
     return missing_values;
 }
 
