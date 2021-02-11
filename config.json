@@ -1,6 +1,6 @@
 {
     "akamai_version": "1.66",
-    "chromePath": "../node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux/chrome",
+    "chromePath": "node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux/chrome",
     "sites": [
         "https://www.xfinity.com",
         "https://www.ups.com",

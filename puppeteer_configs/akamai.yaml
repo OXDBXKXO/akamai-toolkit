@@ -1,0 +1,32 @@
+# General Puppeteer settings
+headless: false
+devtools: true
+windowSize:
+  width: 300
+  heigth: 300
+target: https://www.nike.com
+
+# Leave empty to disable script hijacking
+hijack_script_path: scripts/akamai-1.67-nike.js
+
+helpers: true
+script_name_includes: /staticweb/
+main:
+  page: "
+    console.log('test');
+    for (let i=0; i<50;i++){
+      console.log(i);
+    }
+    "
+  node : "console.log('page loaded')"
+
+POST:
+  node: "
+  console.log('\\n##########################');
+  console.log('sensor_data: ' + req.postData());
+  "
+response:
+  node: "
+  console.log('\\n##########################');
+  console.log('_abck: ' + cookie('_abck'));
+  "

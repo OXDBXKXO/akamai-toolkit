@@ -1,27 +1,18 @@
 #!/usr/bin/node
-// Use :
-// deobfuscator --version checker
-// --> use version checker code to fetch the script
-// ternary
-// custom script loader
-// abck parser (abck.dev API)
 
+const { program } = require('commander');
+const { saveDeofbfuscatedFile, checkVersion, checkVersions, ternary2if, sensorParsing, runPuppetter } = require('./src/main');
 
-const { program, args } = require('commander');
-
-const { saveDeofbfuscatedFile, checkVersions, ternary2if, sensorParsing } = require('./src/main');
-const { getAkamaiVersion } = require('./src/akamai-script');
-
-
-async function args_parse() {
+async function main() {
     
     program
+    .name("./toolkit.js")
+    .usage("<option>")
     .option('-d, --deobfuscate <url>', "Fetches a fresh and readable copy of the Akamai script")
     .option('-v, --version-check [url]', "Checks current Akamai version on a large set of Akamai-protected websites")
-    .option('-t, --ternary', "Turns a ternary expression to a regular if-statement")
     .option('-c, --custom-script <config_file>', "Prompts a Puppeteer-controlled Chromium instance for script behavior analysis")
-    .option('-p, --parse [sensor]', "Parses provided sensor_data")
-    .option('-m, --mact-replay [mact]', "Replays provided mact in browser viewer")
+    .option('-t, --ternary', "Turns a ternary expression to a regular if-statement")
+    .option('-p, --parse', "Parses and check sensor_data")
     .option('-h, --help', "Displays list of available parameters")
 
     program.parse();
@@ -30,20 +21,20 @@ async function args_parse() {
     
     if (options.deobfuscate) await saveDeofbfuscatedFile(options.deobfuscate);
 
-    if (options.versionCheck) {
+    else if (options.versionCheck) {
         if (options.versionCheck === true) { await checkVersions(); process.exit(0); }
-        else { await getAkamaiVersion(options.versionCheck, log=true); process.exit(0); }
+        else { await checkVersion(options.versionCheck); process.exit(0); }
     }
 
-    if (options.ternary) await ternary2if();
+    else if (options.ternary) await ternary2if();
 
-    if (options.parse) sensorParsing();
+    else if (options.customScript) await runPuppetter(options.customScript);
 
-    
+    else if (options.parse) sensorParsing();
 
-    if (options.help) program.help();
+    else if (options.help) program.help();
+
+    else program.help();
 }
 
-args_parse();
-
-
+main();
