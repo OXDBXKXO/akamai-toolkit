@@ -1,14 +1,14 @@
 {
   "name": "akamai-toolkit",
   "version": "1.0.1",
-  "description": "This tool aims to be the perfect tool to work on Akamai by gathering different tools created by the SneakerDev community to ease Akamai cookies generation",
+  "description": "This script aims to provide various tools to work on Akamai anti-bot solution",
   "main": "toolkit.js",
   "scripts": {
     "start": "node toolkit.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "OXDBXKXO",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@babel/parser": "^7.12.14",
     "@babel/traverse": "^7.12.13",

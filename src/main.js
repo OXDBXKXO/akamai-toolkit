@@ -21,12 +21,15 @@ async function saveDeofbfuscatedFile(target) {
     let url = target;
     if (!target.includes("http")) url = "https://" + target;
 
-    const script_obf = (await fetchAkamaiScript(url)).script;
+    const script_obf = (await fetchAkamaiScript(url));
 
-    if (!script_obf) process.exit(0);
+    if (!script_obf) {
+        console.log(chalk.red.underline("Could not fetch Akamai script on target"));
+        process.exit(0);
+    }
     
-    const ver = getVersionFromFile(script_obf);
-    const script = deobfuscate(script_obf);
+    const ver = getVersionFromFile(script_obf.script);
+    const script = deobfuscate(script_obf.script);
 
     console.log("Script version is : " + printColoredVersion(ver));
     

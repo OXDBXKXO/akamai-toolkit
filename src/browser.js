@@ -75,11 +75,6 @@ function startPuppeteer(puppeteerParams) {
 
                 return;
             }
-            
-            else {
-                puppeteerParams.requests && puppeteerParams.requests.node && puppeteerParams.requests.node.length && eval("(async () => {" + puppeteerParams.requests.node + ";})()");
-                puppeteerParams.requests && puppeteerParams.requests.page && puppeteerParams.requests.page.length && await page.evaluate(puppeteerParams.requests.page);
-            }
         });
         
         await page.goto(puppeteerParams.target, {waitUntil: 'load', timeout: 0});
@@ -138,7 +133,6 @@ function getPuppetteerConfigFromFile(filename) {
         let puppeteerParams = yaml.loadAll(data)[0];
         
         puppeteerParams.dis_intercept && (puppeteerParams.dis_intercept = true);
-        // puppeteerParams.helpers && (puppeteerParams.POST.node = puppeteerParams.POST.node.replace(/cookie\(([^)]+)\)/, 'await page.cookies().then(jar => cookie($1, jar))'));
         
         if (puppeteerParams.helpers) {
             puppeteerParams.GET && puppeteerParams.GET.node && (puppeteerParams.GET.node = puppeteerParams.GET.node.replace(/cookie\(([^)]+)\)/, 'await page.cookies().then(jar => cookie($1, jar))'));

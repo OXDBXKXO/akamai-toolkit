@@ -6,7 +6,6 @@ windowSize:
   heigth: 300
 target: https://www.nike.com
 
-# Leave empty to disable script hijacking
 hijack_script_path: scripts/akamai-1.67-nike.js
 
 helpers: true

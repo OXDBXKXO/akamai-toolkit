@@ -1,5 +1,5 @@
 {
-    "akamai_version": "1.66",
+    "akamai_version": "1.67",
     "chromePath": "node_modules/puppeteer/.local-chromium/linux-848005/chrome-linux/chrome",
     "sites": [
         "https://www.xfinity.com",
@@ -22,6 +22,7 @@
         "https://www.collegeboard.org",
         "https://www.xero.com",
         "https://www.emirates.com",
-        "https://www.thetrainline.com"
+        "https://www.thetrainline.com",
+        "https://www.nike.com"
     ]
 }

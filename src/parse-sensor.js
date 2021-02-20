@@ -353,7 +353,7 @@ function prettyPrint(parsed_sensor) {
         console.log(chalk.whiteBright(events[value] + ": " + chalk.cyanBright.bold(val)));
     });
 
-    console.log(chalk.blueBright.underline("\nVariable 115 (Coherence check)"));
+    console.log(chalk.blueBright.underline("\nCoherence check (115))"));
     values_115.forEach(value => {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(value + ": " + chalk.cyanBright.bold(val)));
