@@ -39,7 +39,7 @@ Usage: `node toolkit.js -t`
 The script includes a sensor_data parser and checker based on the checker of [gondone666](https://github.com/gondone666/parse-sensor), which I improved and updated.
 
 Changes :
-- Fixed o9 check using [Zedd3v's abck lib](https://github.com/zedd3v/abck)
+- Fixed o9 check using [Zedd3v's abck lib](https://github.com/zedd3v/abck) (on v1.66, seems to be broken on 1.67)
 - Added 129 variable which was not parsed and causing issues
 - Added pretty-print function that displays sensor_data info in categories
   - Browser information
@@ -62,7 +62,7 @@ Usage: `node toolkit.js -p`
 
 ### Custom browser
 
-The script provides uses Puppeteer to provide an easy way to experiment on scripts. You can replace a script by a custom one, allowing you to add additional logs for example. You can also execute Javascript in Node and in-browser. The tool uses YAML config files, allowing you to quickly change the behaviour of Puppeteer without having to manually edit the code.
+The script uses Puppeteer to provide an easy way to experiment on scripts. You can replace a script by a custom one, allowing you to add additional logs for example. You can also execute Javascript in Node and in-browser. The tool uses YAML config files, allowing you to quickly change the behaviour of Puppeteer without having to manually edit the code.
 
 Available options are:
 - `headless` : to control headless property of the browser
