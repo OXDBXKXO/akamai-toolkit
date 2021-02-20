@@ -11,32 +11,30 @@ To install the dependencies and start using the script, just run:
 
 The script uses [commander](https://www.npmjs.com/package/commander) to parse arguments, which does not behave correctly when using `npm start`. You can use `node` or just do `./toolkit.js` (you may have to update the shebang).
 
-Also please check the chromePath variable in `config.json`.
+Please give a look at the `config.json` file. It contains the current Akamai script version that you must update if needed, the chrome binary to use with Puppeteer and the list of sites to check Akamai version on.
 
-
-
-## Akamai deobfuscator
+### Akamai deobfuscator
 Source from [char](https://github.com/char/akamai-deobfuscator). Using an AST is a really good idea and I'm planning to use the same method to create deobfuscators for other anti-bot scripts. The deobfuscator from **char** required full Akamai script URL, so I added the possibility to simply type the target.
 
 Usage: `node toolkit.js -d <target>`, where target can be of the form *fedex.com*, *www.nike.com* or *https://www.adidas.com*.
 
-## Akamai version checker
+### Akamai version checker
 Source from [zedd3v](https://github.com/zedd3v/akamai-versions-checker). Refactored the code and added possibility to check version on a single site.
 
-The version will print version in different colors depending on the akamai version number set in `config.json`.
+The tool will print script version in different colors depending on the Akamai version number set in `config.json`.
 
 Usage: 
 
 - `node toolkit.js -v`  will check version for all the sites in __config.json__.
 - `node toolkit.js -v <target>` will check version on target. Target can be of the form *fedex.com*, *www.nike.com* or *https://www.adidas.com*.
 
-## Ternary to if 
+### Ternary to if 
 
 Source from [RayBB](https://github.com/RayBB/ternary-converter). I just kept the conversion part. It needs update as malformed ternary sometimes cause infinite loops. 
 
 Usage: `node toolkit.js -t`
 
-## Akamai sensor_data parsing
+### Akamai sensor_data parsing
 
 The script includes a sensor_data parser and checker based on the checker of [gondone666](https://github.com/gondone666/parse-sensor), which I improved and updated.
 
@@ -62,9 +60,9 @@ Changes :
 
 Usage: `node toolkit.js -p`
 
-## Custom browser
+### Custom browser
 
-The script provides uses Puppeteer to provide an easy way to experiment on scripts. You can replace a script by a custom ones, allowing you to add additionnal logs for example. You can also execute Javascript in Node and in-browser. The script uses YAML config files, allowing you to quickly change the behaviour of Puppeteer without having to manually edit the code.
+The script provides uses Puppeteer to provide an easy way to experiment on scripts. You can replace a script by a custom one, allowing you to add additional logs for example. You can also execute Javascript in Node and in-browser. The tool uses YAML config files, allowing you to quickly change the behaviour of Puppeteer without having to manually edit the code.
 
 Available options are:
 - `headless` : to control headless property of the browser
@@ -74,7 +72,7 @@ Available options are:
 - `target` : URL to browse
 - `hijack_script_path` : path to the custom script, leave empty to disable script hijack
 - `helpers` : enable helpers functions for simpler config file creation
-	At the moment the script only has one helper: `cookie`, that allows user to easy access the value of a cookie.
+	At the moment the script only has one helper: `cookie`, allowing user to access the value of a cookie without having to type the full Javascript code.
 - `script_name_includes` : full URL or part of the URL of the script to replace
 - `main` : code to be ran after the target page is loaded
   - `page` : code to be ran on page
