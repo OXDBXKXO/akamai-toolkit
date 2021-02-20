@@ -12,7 +12,8 @@ function startPuppeteer(puppeteerParams) {
     const size_config = !puppeteerParams.windowSize ? '--start-maximized' : `--window-size=${puppeteerParams.windowSize.width},${puppeteerParams.windowSize.height}`;
     
     puppeteer.launch({ headless: puppeteerParams.headless, devtools: puppeteerParams.devtools, ignoreHTTPSErrors: true, args: [size_config], executablePath: config.chromePath }).then(async browser => {
-        page = await browser.newPage();
+        const pages = await browser.pages()
+        const page = pages[0];
         
         await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
         await page.setRequestInterception(!puppeteerParams.dis_intercept);
