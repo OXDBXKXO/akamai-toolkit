@@ -31,7 +31,8 @@ async function saveDeofbfuscatedFile(target) {
     const ver = getVersionFromFile(script_obf.script);
     const script = deobfuscate(script_obf.script);
 
-    console.log("Script version is : " + printColoredVersion(ver));
+    console.log("Script version is: " + printColoredVersion(ver));
+    console.log("Script location is: " + script_obf.endpoint);
     
     const filename = "akamai-" + ver + "-" + ((target.match(/\./g) || []).length == 1 ? target.split('.')[0] : target.split('.')[1]) + ".js";
 
