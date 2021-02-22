@@ -9,7 +9,7 @@ const config = require('../config.json')
 
 function startPuppeteer(puppeteerParams) {
 
-    const size_config = !puppeteerParams.windowSize ? '--start-maximized' : `--window-size=${puppeteerParams.windowSize.width},${puppeteerParams.windowSize.height}`;
+    const size_config = !(!puppeteerParams.windowSize && puppeteerParams.windowSize.width.length && puppeteerParams.windowSize.height.length) ? `--window-size=${puppeteerParams.windowSize.width},${puppeteerParams.windowSize.height}` : '--start-maximized';
     
     puppeteer.launch({ headless: puppeteerParams.headless, devtools: puppeteerParams.devtools, ignoreHTTPSErrors: true, args: [size_config], executablePath: config.chromePath }).then(async browser => {
         const pages = await browser.pages()
@@ -80,11 +80,11 @@ function startPuppeteer(puppeteerParams) {
         
         await page.goto(puppeteerParams.target, {waitUntil: 'load', timeout: 0});
         
-        puppeteerParams.main && eval("(async () => {" + puppeteerParams.main.node + ";})()")
-        puppeteerParams.main && await page.evaluate(puppeteerParams.main.page)
+        puppeteerParams.main && puppeteerParams.main.node && eval("(async () => {" + puppeteerParams.main.node + ";})()")
+        puppeteerParams.main && puppeteerParams.main.page && await page.evaluate(puppeteerParams.main.page)
         
     }).catch((e) => { 
-        console.log(chalk.red.underline("browser.js: startPuppeteerInstance\n" + e.message));
+        console.log(chalk.red.underline("browser.js: startPuppeteer\n" + e.message));
         process.exit(0);
      })
 }
