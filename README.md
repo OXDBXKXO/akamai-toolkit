@@ -95,5 +95,5 @@ Available options are:
 
 You will find an example config file for Akamai script hijack on nike.com in **puppeteer_configs** directory.
 
-Usage: `node toolkit.js <config_file>`
-	Please note that config files can only be in **puppeteer_configs** directory and that you do not need to specify the .yaml extension. For example, to call Puppeteer with my Akamai config, I need to call `node toolkit.js akamai`.
+Usage: `node toolkit.js -c <config_file>`
+	Please note that config files can only be in **puppeteer_configs** directory and that you do not need to specify the .yaml extension. For example, to call Puppeteer with akamai.yaml config, you need to call `node toolkit.js -c akamai`.
