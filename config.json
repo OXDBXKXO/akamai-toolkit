@@ -1,5 +1,5 @@
 {
-    "akamai_version": "1.67",
+    "akamai_version": "1.68",
     "chromePath": "node_modules/puppeteer/.local-chromium/linux-856583/chrome-linux/chrome",
     "sites": [
         "https://www.xfinity.com",

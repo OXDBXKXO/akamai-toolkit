@@ -392,10 +392,10 @@ function prettyPrint(parsed_sensor) {
         "fmh": "bmak.fmh (installed fonts hash)",
         "fmz": "bmak.fmz (window.devicePixelRatio)",
         "ssh": "bmak.ssh (speech synthesis hash)",
-        "wv": "bmak.wv (always empty)",
-        "wr": "bmak.wr (always empty)",
-        "weh": "bmak.weh (always empty)",
-        "wl": "bmak.wl (always 0)"
+        "wv": "bmak.wv",
+        "wr": "bmak.wr",
+        "weh": "bmak.weh",
+        "wl": "bmak.wl"
     }
     Object.keys(more_fingerprinting).forEach(value => {
         let val = parsed_sensor[value];
