@@ -74,24 +74,24 @@ Available options are:
 - `helpers` : enable helpers functions for simpler config file creation
 	At the moment the script only has one helper: `cookie`, allowing user to access the value of a cookie without having to type the full Javascript code.
 - `script_name_includes` : full URL or part of the URL of the script to replace
-- `main` : code to be ran after the target page is loaded
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval()
-- `GET` : code to be ran when the target script is being downloaded
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval() (you do not need to include script hijack code)
-- `POST` : code to be ran when a POST is made to the target script
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval()
-- `DEFAULT` : code to be ran when any other HTTP method is used on target script
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval()
-- `response` : code to be ran when a request to target script receives a response
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval()
-- `requests` : code to be ran when a request in made to any other resource than the script
-  - `page` : code to be ran on page
-  - `node` : code to be ran in Node.js using eval()
+- `main` : code to run after the target page is loaded
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval()
+- `GET` : code to run when the target script is being downloaded
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval() (you do not need to include script hijack code)
+- `POST` : code to run when a POST is made to the target script
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval()
+- `DEFAULT` : code to run when any other HTTP method is used on target script
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval()
+- `response` : code to run when a request to target script receives a response
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval()
+- `requests` : code to run when a request in made to any other resource than the script
+  - `page` : code to run on page
+  - `node` : code to run in Node.js using eval()
 
 You will find an example config file for Akamai script hijack on nike.com in **puppeteer_configs** directory.
 

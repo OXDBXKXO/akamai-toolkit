@@ -1,0 +1,33 @@
+headless: false
+devtools: false
+windowSize:
+  width:
+  heigth:
+helpers: true
+dis_intercept: false
+target: 
+hijack_script_path: 
+script_name_includes: 
+main: 
+  page: 
+  node: 
+
+GET: 
+  page: 
+  node: 
+
+POST: 
+  page: 
+  node: 
+
+DEFAULT: 
+  page: 
+  node: 
+
+response: 
+  page: 
+  node: 
+
+requests: 
+  page: 
+  node:
