@@ -247,7 +247,7 @@ function parse_sensor(sensor_data) {
     
     let aj_type = parsed_sensor["aj"].split(',')[0];
     let tst = parsed_sensor["timings"].split(';')[1];
-    console.log(chalk.whiteBright.bold("tst check:               ") + ((aj_type && tst == -1) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright("tst is -1 only for aj_type=0") : chalk.green.bold("PASSED")));
+    console.log(chalk.whiteBright.bold("tst check:               ") + ((aj_type != 0 && tst == -1) ? chalk.red.bold("FAILED ") + chalk.magentaBright("tst is -1 only for aj_type=0") : chalk.green.bold("PASSED")));
     
     console.log(chalk.whiteBright.bold("fpcf_td check:           ") + ((aj_type && parsed_sensor["fpcf_td"] == -999999 || !aj_type && parsed_sensor["fpcf_td"] != -999999) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright("fpcf_td is -999999 only for aj_type=0") : chalk.green.bold("PASSED")));
     console.log(chalk.whiteBright.bold("start_ts/2 check:        ") + ((parsed_sensor["start_ts / 2"] != (parsed_sensor["bmak.start_ts"] / 2)) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(parsed_sensor["bmak.start_ts"] / 2) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["start_ts / 2"]) : chalk.green.bold("PASSED")));
