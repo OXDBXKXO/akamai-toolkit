@@ -3,7 +3,7 @@ const { default: Abck } = require("abck");
 
 const keys = {
     '-1,2,-94,-100,': 'key_ver',
-    '-1,2,-94,-101,': 'Browser_Info',
+    '-1,2,-94,-101,': 'browser_info',
     '-1,2,-94,-105,': 'events',
     '-1,2,-94,-102,': 'informinfo',
     '-1,2,-94,-108,': 'forminfo',
@@ -15,7 +15,7 @@ const keys = {
     '-1,2,-94,-103,': 'pact',
     '-1,2,-94,-112,': 'vcact',
     '-1,2,-94,-115,': 'URL',
-    '-1,2,-94,-106,': 'Coherence_Check',
+    '-1,2,-94,-106,': 'consistency_check',
     '-1,2,-94,-119,': 'aj',
     '-1,2,-94,-122,': 'mr',
     '-1,2,-94,-123,': 'sed',
@@ -31,7 +31,7 @@ const keys = {
 };
 
 const values_gd = ["xagg", "psub", "lang", "prod", "plen", "pen", "wen", "den", "z1", "d3", "availWidth", "availHeight", "width", "height", "innerWidth", "innerHeight", "outerWidth", "ua_hash", "random", "start_ts / 2", "brv", "loc"];
-const values_115 = ["bmak.ke_vel + 1", "bmak.me_vel + 32", "bmak.te_vel + 32", "bmak.doe_vel", "bmak.dme_vel", "bmak.pe_vel", "k (vels sum)", "bmak.updatet()","bmak.init_time", "bmak.start_ts", "bmak.fpcf.td", "bmak.d2", "bmak.ke_cnt", "bmak.me_cnt", "bmak.pi(bmak.d2 / 6)", "bmak.pe_cnt", "bmak.te_cnt", "bmak.get_cf_date() - bmak.start_ts", "bmak.ta", "bmak.n_ck", "bmak.get_cookie()", "bmak.ab(bmak.get_cookie())", "bmak.fpcf.rVal", "bmak.fpcf.rCFP", "bmak.fas()", "bmak.ff(80) + bmak.ff(105) + bmak.ff(90) + bmak.ff(116) + bmak.ff(69)", "bmak.jrs(bmak.start_ts)[0]", "bmak.jrs(bmak.start_ts)[1]"];
+const values_115 = ["bmak.ke_vel + 1", "bmak.me_vel + 32", "bmak.te_vel + 32", "bmak.doe_vel", "bmak.dme_vel", "bmak.pe_vel", "k (vels sum)", "bmak.updatet()","bmak.init_time", "bmak.start_ts", "bmak.fpcf.td", "bmak.d2", "bmak.ke_cnt", "bmak.me_cnt", "bmak.pi(bmak.d2 / 6)", "bmak.pe_cnt", "bmak.te_cnt", "bmak.get_cf_date() - bmak.start_ts", "bmak.ta", "bmak.n_ck", "bmak.get_cookie()", "bmak.ab(bmak.get_cookie())", "bmak.fpcf.rVal", "bmak.fpcf.rCFP", "bmak.fas()", "bmak.ff(80) + bmak.ff(105) + bmak.ff(90) + bmak.ff(116) + bmak.ff(69)", "bmak.jrs(bmak.start_ts)[0]", "bmak.jrs(bmak.start_ts)[1]", "hbs", "gwd"];
 const values_fpVal = ["canvas(\"<@nv45. F1n63r,Pr1n71n6!\")", "canvas(\"m,Ev!xV67BaU> eh2m<f3AG3@\")", "bmak.runFonts ? bmak.altFonts ? t.fonts_optm() : t.fonts() : \"dis\"", "pluginInfo()", "sessionStorageKey()", "localStorageKey()", "indexedDbKey()", "timezoneOffsetKey()", "webrtcKey()", "screen.colorDepth ? screen.colorDepth : -1", "screen.pixelDepth ? screen.pixelDepth : -1", "navigator.cookieEnabled ? navigator.cookieEnabled : -1", "navigator.javaEnabled ? navigator.javaEnabled() : -1", "navigator.doNotTrack ? navigator.doNotTrack : -1"];
 const values_129 = [ "fmh", "fmz", "ssh", "wv", "wr", "weh", "wl"];
 
@@ -59,7 +59,7 @@ function parse_sensor(sensor_data) {
         if (sensor_variable == "") continue;
 
         switch (keys[key]) {
-            case "Browser_Info":
+            case "browser_info":
                 const bd = (sensor_variable.match(/cpen(.*?)x12\:(\d+)/g,""))[0];
                 const bd_values = ["cpen", "i1", "dm", "cwen", "non", "opc", "fc", "sc", "wrc", "isc", "vib", "bat", "x11", "x12"];
                 
@@ -77,7 +77,7 @@ function parse_sensor(sensor_data) {
                 }
             break;
 
-            case "Coherence_Check": 
+            case "consistency_check": 
                 const h_value = sensor_variable.split(",");
                 for (let i = 0; i < values_115.length; i++) {
                     parsed_sensor[values_115[i]] = h_value[i];
@@ -241,8 +241,6 @@ function parse_sensor(sensor_data) {
     console.log(chalk.whiteBright.bold("d2/6 check:              ") + ((parsed_sensor["bmak.pi(bmak.d2 / 6)"] != Math.floor(parsed_sensor["bmak.d2"] / 6)) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(Math.floor(parsed_sensor["bmak.d2"] / 6)) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["bmak.pi(bmak.d2 / 6)"]) : chalk.green.bold("PASSED")));
     console.log(chalk.whiteBright.bold("d3 check:                ") + ((Math.abs(parsed_sensor["start_ts"] % 1e7 - parsed_sensor["d3"]) < 2) ? chalk.red.bold("FAILED Expected Math.abs(") + chalk.magentaBright(parsed_sensor["start_ts"] % 1e7 - parsed_sensor["d3"]) + chalk.red.bold(") > 2") : chalk.green.bold("PASSED")));
     
-    let o9 = calc_o9(parsed_sensor["d3"]);
-    console.log(chalk.whiteBright.bold("o9 check:                ") + ((parsed_sensor["o9"] - o9) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(o9) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["o9"]) : chalk.green.bold("PASSED")));
     console.log(chalk.whiteBright.bold("z1 check:                ") + ((parsed_sensor["z1"] != parseInt(parsed_sensor["bmak.start_ts"] / (2016 * 2016))) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(parseInt(parsed_sensor["bmak.start_ts"] / (2016 * 2016))) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["z1"]) : chalk.green.bold("PASSED")));
     
     let aj_type = parsed_sensor["aj"].split(',')[0];
@@ -255,6 +253,8 @@ function parse_sensor(sensor_data) {
     const ua_hash = Abck.ab(parsed_sensor["user_agent"]);
     console.log(chalk.whiteBright.bold("bmak.aur() hash check:   ") + ((parsed_sensor["ua_hash"] != ua_hash) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(ua_hash) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["ua_hash"]) : chalk.green.bold("PASSED")));
     
+    console.log(chalk.whiteBright.bold("bmak.hbs() check:        ") + ((parsed_sensor["hbs"] != 0) ? chalk.red.bold("FAILED ") + chalk.magentaBright("bmak.hbs() != 0 indicates use of browser automation tools") : chalk.green.bold("PASSED")));
+
     const fpVal_Hash = Abck.ab(parsed_sensor["fpVal"]);
     console.log(chalk.whiteBright.bold("fpValStr hash check:     ") + ((parsed_sensor["fpVal_Hash"] != fpVal_Hash) ? chalk.red.bold("FAILED Expected ") + chalk.magentaBright(fpVal_Hash) + chalk.red.bold(" found ") + chalk.magentaBright(parsed_sensor["fpVal_Hash"]) : chalk.green.bold("PASSED")));
     
@@ -291,7 +291,9 @@ function prettyPrint(parsed_sensor) {
         "xagg":"bmak.xagg",
         "pen":"bmak.pen",
         "wen":"bmak.wen",
-        "den":"bmak.den"
+        "den":"bmak.den",
+        "hbs":"bmak.hbs()",
+        "gwd":"bmak.gwd()"
     };
     Object.keys(auto_detect).forEach(value => {
         let val = parsed_sensor[value];
@@ -355,8 +357,12 @@ function prettyPrint(parsed_sensor) {
 
     console.log(chalk.blueBright.underline("\nCoherence check (115))"));
     values_115.forEach(value => {
-        let val = parsed_sensor[value];
-        console.log(chalk.whiteBright(value + ": " + chalk.cyanBright.bold(val)));
+        if (value == "hbs" || value == "gwd") {
+            // Do not print them here as we already print them in Automation Detection section
+            return;
+        }
+
+        console.log(chalk.whiteBright(value + ": " + chalk.cyanBright.bold(parsed_sensor[value])));
     });
 
     console.log(chalk.blueBright.underline("\nChallenges"));
@@ -445,17 +451,6 @@ function prettyPrint(parsed_sensor) {
         let val = parsed_sensor[value];
         console.log(chalk.whiteBright(misc[value] + ": " + chalk.cyanBright.bold(val)));
     });
-}
-
-function calc_o9(d3) {
-    let t = d3;
-    for (let n = 0; n < 5; n++) {
-        const o = parseInt(d3 / Math.pow(10, n)) % 10;
-        const m = o + 1;
-        const op = Abck.cc(o);
-        t = op(t, m);
-    }
-    return t * 3;
 }
 
 function getSensorType(aj_type) {

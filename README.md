@@ -39,7 +39,6 @@ Usage: `node toolkit.js -t`
 The script includes a sensor_data parser and checker based on the checker of [gondone666](https://github.com/gondone666/parse-sensor), which I improved and updated.
 
 Changes :
-- Fixed o9 check using [Zedd3v's abck lib](https://github.com/zedd3v/abck)
 - Added 129 variable which was not parsed and causing issues
 - Added pretty-print function that displays sensor_data info in categories
   - Browser information
