@@ -29,8 +29,10 @@ async function fetchAkamaiScript(url) {
     try {
         const body = await request(url);
 
-        const scriptUrl = /\['_setAu', '(\/\w+\/\w+)'\]/i.exec(body);
+        scriptUrl = /\['_setAu', '(\/\w+\/\w+)'\]/i.exec(body);
         
+        if (!scriptUrl) scriptUrl = /<script type="text\/javascript"  src="([^"]+?)"><\/script><\/body>/g.exec(body);
+
         if (!scriptUrl) return;
         
         return { endpoint: `${url}${scriptUrl[1]}`, script: (await request(`${url}${scriptUrl[1]}`)) };
