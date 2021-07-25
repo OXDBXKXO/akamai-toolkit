@@ -1,5 +1,6 @@
 const got = require('got');
 const chalk = require('chalk');
+const pad = require('pad');
 
 let config = require('../config.json');
 
@@ -61,16 +62,16 @@ async function getAkamaiVersion(url, log=undefined) {
 
     const ver = getVersionFromFile(result.script);
 
-    if (log) console.log(result.endpoint, printColoredVersion(ver));
+    if (log) console.log(printColoredVersion(ver), result.endpoint);
 
     return ver;
 }
 
 function printColoredVersion(ver) {
-    if (parseFloat(ver) > parseFloat(config.akamai_version)) return chalk.yellowBright.bold(ver + " (new)");
-    else if (parseFloat(ver) < parseFloat(config.akamai_version)) return chalk.magentaBright.bold(ver + " (old)");
-    else if (parseFloat(ver) == parseFloat(config.akamai_version)) return chalk.greenBright.bold(ver + " (current)");
-    else return chalk.red.bold(ver + " :(");
+    if (parseFloat(ver) > parseFloat(config.akamai_version)) return chalk.yellowBright.bold(pad(ver, 4) + pad("   (new)", 10));
+    else if (parseFloat(ver) < parseFloat(config.akamai_version)) return chalk.magentaBright.bold(pad(ver, 4) + pad("   (old)", 10));
+    else if (parseFloat(ver) == parseFloat(config.akamai_version)) return chalk.greenBright.bold(pad(ver, 4) + pad(" (current)", 10));
+    else return chalk.red.bold(pad(ver, 4) + pad(" :(", 10));
 }
 
 module.exports = { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion, printColoredVersion };

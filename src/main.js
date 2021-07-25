@@ -18,8 +18,7 @@ const config = require('../config.json');
 
 async function saveDeofbfuscatedFile(target) {
 
-    let url = target;
-    if (!target.includes("http")) url = "https://" + target;
+    if (!target.includes("http")) target = "https://" + target;
 
     const script_obf = (await fetchAkamaiScript(url));
 
@@ -55,10 +54,9 @@ async function saveDeofbfuscatedFile(target) {
 
 async function checkVersion(target) {
 
-    let url = target;
-    if (!target.includes("http")) url = "https://" + target;
+    if (!target.includes("http")) target = "https://" + target;
 
-    return getAkamaiVersion(url, log=true);
+    return getAkamaiVersion(target, log=true);
 }
 
 async function checkVersions() {

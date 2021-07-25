@@ -18,6 +18,7 @@
     "got": "^11.8.1",
     "js-beautify": "^1.13.5",
     "js-yaml": "^4.0.0",
+    "pad": "^3.2.0",
     "puppeteer": "^8.0.0",
     "puppeteer-extra": "^3.1.16",
     "puppeteer-extra-plugin-stealth": "^2.7.4"
