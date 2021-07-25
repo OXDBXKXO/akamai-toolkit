@@ -35,7 +35,10 @@ async function fetchAkamaiScript(url) {
 
         if (!scriptUrl) return;
         
-        return { endpoint: `${url}${scriptUrl[1]}`, script: (await request(`${url}${scriptUrl[1]}`)) };
+        if (scriptUrl[1].includes(url)) endpoint = scriptUrl[1]
+        else endpoint = url + scriptUrl[1]
+
+        return { endpoint: endpoint, script: (await request(endpoint)) };
     }
     catch (err) {
         console.log(chalk.red.underline("Failed to fetch Akamai script on " + url));
@@ -43,7 +46,12 @@ async function fetchAkamaiScript(url) {
 }
 
 function getVersionFromFile(file) {
-    return file.split('ver:')[1].split(',ke_cnt_lmt')[0];
+    try {
+        return file.split('ver:')[1].split(',ke_cnt_lmt')[0];
+    }
+    catch (err) {
+        return chalk.underline("ERROR");
+    }
 }
 
 async function getAkamaiVersion(url, log=undefined) {
@@ -61,7 +69,8 @@ async function getAkamaiVersion(url, log=undefined) {
 function printColoredVersion(ver) {
     if (parseFloat(ver) > parseFloat(config.akamai_version)) return chalk.yellowBright.bold(ver + " (new)");
     else if (parseFloat(ver) < parseFloat(config.akamai_version)) return chalk.magentaBright.bold(ver + " (old)");
-    else return chalk.greenBright.bold(ver + " (current)");
+    else if (parseFloat(ver) == parseFloat(config.akamai_version)) return chalk.greenBright.bold(ver + " (current)");
+    else return chalk.red.bold(ver + " :(");
 }
 
 module.exports = { fetchAkamaiScript, getVersionFromFile, getAkamaiVersion, printColoredVersion };

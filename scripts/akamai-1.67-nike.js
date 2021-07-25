@@ -1,6 +1,3 @@
-console.log("We are injecting a custom script");
-alert("Custom Akamai script injected")
-
 var _cf = _cf || [],
   bmak = bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : {
     ver: 1.67,
