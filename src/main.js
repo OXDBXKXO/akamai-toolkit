@@ -32,8 +32,8 @@ async function saveDeofbfuscatedFile(target) {
 
     console.log("Script version is: " + printColoredVersion(ver));
     console.log("Script location is: " + script_obf.endpoint);
-    
-    const filename = "akamai-" + ver + "-" + ((target.match(/\./g) || []).length == 1 ? target.split('.')[0] : target.split('.')[1]) + ".js";
+
+    const filename = "akamai-" + ver + "-" + ((target.match(/\./g) || []).length == 1 ? target.split('.')[0] : target.split('.')[1]).replace("https://", "").replace("http://", "") + ".js";
 
     try {
         if(!fs.existsSync(__dirname + '/../scripts')) {
