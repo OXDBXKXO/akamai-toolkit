@@ -20,7 +20,7 @@ async function saveDeofbfuscatedFile(target) {
 
     if (!target.includes("http")) target = "https://" + target;
 
-    const script_obf = (await fetchAkamaiScript(url));
+    const script_obf = (await fetchAkamaiScript(target));
 
     if (!script_obf) {
         console.log(chalk.red.underline("Could not fetch Akamai script on target"));
@@ -45,7 +45,7 @@ async function saveDeofbfuscatedFile(target) {
     }
 
     fs.writeFile(__dirname + '/../scripts/' + filename, script, function (err) {
-        if (err) { console.log(chalk.red.underline("Could not create ../scripts/" + filename + " file")); process.exit(0); }
+        if (err) { console.log(chalk.red.underline("Could not create ../scripts/" + filename + " file") + "\n" + err); process.exit(0); }
 
         console.log(chalk.whiteBright.underline(filename) + " successfully created in `scripts` folder");
         process.exit(0);

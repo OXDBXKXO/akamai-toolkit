@@ -36,7 +36,7 @@ async function fetchAkamaiScript(url) {
 
         if (!scriptUrl) return;
         
-        if (scriptUrl[1].includes(url)) endpoint = scriptUrl[1]
+        if (scriptUrl[1].includes("http")) endpoint = scriptUrl[1]
         else endpoint = url + scriptUrl[1]
 
         return { endpoint: endpoint, script: (await request(endpoint)) };
