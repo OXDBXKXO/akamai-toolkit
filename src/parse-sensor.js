@@ -93,9 +93,12 @@ function parse_sensor(sensor_data) {
 
             case "more_fingerprinting":
                 const more_fp = sensor_variable.split(",");
-                for (let i = 0; i < values_129.length; i++) {
+                for (let i = 0; i < 4; i++) {
                     parsed_sensor[values_129[i]] = more_fp[i];
                 }
+                parsed_sensor["wr"] = more_fp.slice(4, -3).join(",");
+                parsed_sensor["weh"] = more_fp.slice(-2)[0];
+                parsed_sensor["wl"] = more_fp.slice(-1)[0];
             break;
 
             case "mact":
@@ -420,8 +423,9 @@ function prettyPrint(parsed_sensor) {
     });
 
     console.log(chalk.blueBright.underline("\nSensor_data info"));
-    const api_key = parsed_sensor["key_ver"].substring(0, parsed_sensor["key_ver"].length - 4);
-    const version = parsed_sensor["key_ver"].substring(parsed_sensor["key_ver"].length - 4)
+    const version_length = parsed_sensor["key_ver"].split(".")[1].length + 2;
+    const api_key = parsed_sensor["key_ver"].substring(0, parsed_sensor["key_ver"].length - version_length);
+    const version = parsed_sensor["key_ver"].substring(parsed_sensor["key_ver"].length - version_length)
     console.log(chalk.whiteBright("API public key hash: " + chalk.cyanBright.bold(api_key)));
     console.log(chalk.whiteBright("Akamai version: " + chalk.cyanBright.bold(version)));
 
